@@ -1,13 +1,13 @@
 import os
 import shutil
 
-desktop = os.path.expanduser(r"C:\Users\kmlkr\OneDrive\Pulpit")
+desktop = os.path.expanduser(r"some path")
 
 list_of_exts_n_dirs = {
-    "pdf": r"C:\Users\kmlkr\OneDrive\Pulpit\Stuff\pdfs",
-    "lnk": r"C:\Users\kmlkr\OneDrive\Pulpit\Stuff\short",
-    "exe": r"C:\Users\kmlkr\OneDrive\Pulpit\Stuff\exe",
-    "txt": r"C:\Users\kmlkr\OneDrive\Pulpit\Stuff\otheroffice"
+    "pdf": r"some path",
+    "lnk": r"some path",
+    "exe": r"some path",
+    "txt": r"some path"
 }
 
 for dir_path in list_of_exts_n_dirs.values():
