@@ -1,13 +1,14 @@
 import os
 import shutil
+from tkinter import filedialog
 
-desktop = os.path.expanduser(r"C:\Users\kmlkr\OneDrive\Pulpit")
 
-
+clean_path = filedialog.askdirectory()
+print(f"selected directory to clean: {clean_path}")
 
 def move_files_n_dirs_by_extension(src_dir):
     dir_sort = input("write name of directory for placing sorted files: ")
-    sort_path = os.path.join(desktop, dir_sort)
+    sort_path = os.path.join(clean_path, dir_sort)
     if not os.path.exists(sort_path):
         os.makedirs(sort_path)
         for item in os.listdir(src_dir):
@@ -47,4 +48,4 @@ def move_files_n_dirs_by_extension(src_dir):
                 print(f"Skipped {item} due to PermissionError (file in use).")
 
 
-move_files_n_dirs_by_extension(desktop)
+move_files_n_dirs_by_extension(clean_path)
