@@ -3,11 +3,11 @@ import shutil
 from tkinter import filedialog
 
 def move_files_n_dirs_by_extension(src_dir):
-    dir_sort = input("Enter the name of the directory for placing sorted files: ")
+    dir_sort = input("Enter the name of the directory for placing sorted files: ") 
     sort_path = os.path.join(src_dir, dir_sort)
     
     if not os.path.exists(sort_path):
-        os.makedirs(sort_path) #check if we can create a directory
+        os.makedirs(sort_path) #check if we can create a directory, if this directory exists it will no delete it, just add more files to it
     
     for item in os.listdir(src_dir):
         item_path = os.path.join(src_dir, item)
