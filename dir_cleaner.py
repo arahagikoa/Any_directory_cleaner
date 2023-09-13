@@ -2,9 +2,7 @@ import os
 import shutil
 from tkinter import filedialog
 
-def move_files_n_dirs_by_extension():
-    src_dir = filedialog.askdirectory()
-    dir_sort = filedialog.askdirectory() 
+def move_files_n_dirs_by_extension(src_dir, dir_sort):
     sort_path = os.path.join(src_dir, dir_sort)
     
     if not os.path.exists(sort_path):

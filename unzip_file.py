@@ -5,9 +5,9 @@ from tkinter import filedialog
 
 #unzip file
 
-def unzip():
-    file = filedialog.askopenfilename()
-    extraction_directory = filedialog.askdirectory()
+def unzip(file, extraction_directory):
+    #file = filedialog.askopenfilename()
+    #extraction_directory = filedialog.askdirectory()
     if "." in file:
         file_extension = file.split(".")[-1]
         commands = {
@@ -22,5 +22,3 @@ def unzip():
             if file_extension == key:
                 result = subprocess.run(value, shell = True, stdout=subprocess.PIPE, text=True) 
                 return result.stdout
-
-unzip()
