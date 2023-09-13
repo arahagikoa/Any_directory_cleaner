@@ -1,95 +1,93 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 from dir_cleaner import move_files_n_dirs_by_extension
 from unzip_file import unzip
-from tkinter import filedialog
 
-
-window = tk.Tk()
-window.title("Utils4Yoou")
-window.geometry("600x750")
-window.resizable(False, False)
-
-n = ttk.Notebook(window)
-n.pack(fill="both", expand= True)
-
-def file_choose(filename):
+def choose_directory(text_widget):
     selected_directory = filedialog.askdirectory()
-    filename.config(state=tk.NORMAL)  
-    filename.delete("1.0", tk.END)  
-    filename.insert(tk.END, selected_directory)  
-    filename.config(state=tk.DISABLED)
+    text_widget.config(state=tk.NORMAL)
+    text_widget.delete("1.0", tk.END)
+    text_widget.insert(tk.END, selected_directory)
+    text_widget.config(state=tk.DISABLED)
 
-def clear_label(label_name):
-    label_name.config(state=tk.NORMAL)
-    label_name.delete("1.0", tk.END)
-    label_name.config(state=tk.DISABLED)
+def clear_text_widget(text_widget):
+    text_widget.config(state=tk.NORMAL)
+    text_widget.delete("1.0", tk.END)
+    text_widget.config(state=tk.DISABLED)
 
 def clean_directory():
-    input_directory = first_file.get("1.0", "end-1c")  
-    output_directory = second_file.get("1.0", "end-1c")  
+    input_directory = input_dir_text.get("1.0", "end-1c")
+    output_directory = output_dir_text.get("1.0", "end-1c")
     move_files_n_dirs_by_extension(input_directory, output_directory)
-    clear_label(first_file)
-    clear_label(second_file)
+    clear_text_widget(input_dir_text)
+    clear_text_widget(output_dir_text)
 
-def unzip_your_past():
-    input_directory = third_file.get("1.0", "end-1c")  
-    output_directory = fourth_file.get("1.0", "end-1c")  
+def unzip_files():
+    input_directory = unzip_input_text.get("1.0", "end-1c")
+    output_directory = unzip_output_text.get("1.0", "end-1c")
     unzip(input_directory, output_directory)
-    clear_label(third_file)
-    clear_label(fourth_file)
+    clear_text_widget(unzip_input_text)
+    clear_text_widget(unzip_output_text)
 
-first = tk.Frame(n)
-second = tk.Frame(n)
-n.add(first, text = "Directory cleaner")
-n.add(second, text = "Unzip your problems")
+window = tk.Tk()
+window.title("Utils4You")
+window.geometry("600x400")
+window.resizable(False, False)
 
-first_file = tk.Text(first, height=1, width=50)
-first_file.place(x=30, y=53)
-first_file.config(state=tk.DISABLED)
+notebook = ttk.Notebook(window)
+notebook.pack(fill="both", expand=True)
 
-second_file = tk.Text(first, height=1, width=50)
-second_file.place(x=30, y = 113)
-second_file.config(state=tk.DISABLED)
+directory_cleaner_tab = tk.Frame(notebook)
+unzip_tab = tk.Frame(notebook)
 
-third_file = tk.Text(second, height=1, width=50)
-third_file.place(x=30, y=53)
-third_file.config(state=tk.DISABLED)
+notebook.add(directory_cleaner_tab, text="Directory Cleaner")
+notebook.add(unzip_tab, text="Unzip Files")
 
-fourth_file = tk.Text(second, height=1, width=50)
-fourth_file.place(x=30, y=113)
-fourth_file.config(state=tk.DISABLED)
+# Dir cleaner
 
+input_dir_label = tk.Label(directory_cleaner_tab, text="Directory to clean:", font=("Arial", 12))
+input_dir_label.pack(pady=10)
 
-text_label = tk.Label(first, text="Directory to clean: ", font=("Arial", 16), fg="black")
-text_label.place(x = 30, y = 20)
+input_dir_text = tk.Text(directory_cleaner_tab, height=1, width=50)
+input_dir_text.pack()
 
-text_label_2 = tk.Label(first, text="Directory to output sorted data: ", font=("Arial", 16), fg="black")
-text_label_2.place(x = 30, y = 80)
+output_dir_label = tk.Label(directory_cleaner_tab, text="Output directory:", font=("Arial", 12))
+output_dir_label.pack(pady=10)
 
-text_label_3 = tk.Label(second, text="Choose file to unzip", font=("Arial", 16), fg="black")
-text_label_3.place(x = 30, y = 20)
+output_dir_text = tk.Text(directory_cleaner_tab, height=1, width=50)
+output_dir_text.pack()
 
-text_label_4 = tk.Label(second, text="Choose destination directory", font=("Arial", 16), fg="black")
-text_label_4.place(x = 30, y = 75)
+browse_input_button = tk.Button(directory_cleaner_tab, text="Browse...", command=lambda: choose_directory(input_dir_text))
+browse_input_button.place(x = 30, y = 40)
 
+browse_output_button = tk.Button(directory_cleaner_tab, text="Browse...", command=lambda: choose_directory(output_dir_text))
+browse_output_button.place(x = 30, y = 105)
 
-browse_button = tk.Button(first, text ="Browse...", command= lambda: file_choose(first_file), width= 10, height= 1)
-browse_button.place(x = 440 , y  = 51)
+clean_button = tk.Button(directory_cleaner_tab, text="Clean", command=clean_directory)
+clean_button.pack(pady=20)
 
-browse_button2 = tk.Button(first, text = "Browse", command = lambda: file_choose(second_file), width= 10, height= 1)
-browse_button2.place(x = 440,y = 111)
+#Unzip
 
-browse_button3 = tk.Button(second, text ="Browse...", command= lambda: file_choose(third_file), width= 10, height= 1)
-browse_button3.place(x = 440 , y  = 51)
+unzip_input_label = tk.Label(unzip_tab, text="Choose file to unzip:", font=("Arial", 12))
+unzip_input_label.pack(pady=10)
 
-browse_button4 = tk.Button(second, text ="Browse...", command= lambda: file_choose(fourth_file), width= 10, height= 1)
-browse_button4.place(x = 440 , y  = 111)
+unzip_input_text = tk.Text(unzip_tab, height=1, width=50)
+unzip_input_text.pack()
 
-clean_button = tk.Button(first, text="Clean...", command=clean_directory, width=10, height=1)
-clean_button.place(x=230, y=200)
+unzip_output_label = tk.Label(unzip_tab, text="Choose destination directory:", font=("Arial", 12))
+unzip_output_label.pack(pady=10)
 
-unzip_button = tk.Button(second, text = "unzip...", command= unzip_your_past, width= 10, height= 1)
-unzip_button.place(x = 230, y = 200)
+unzip_output_text = tk.Text(unzip_tab, height=1, width=50)
+unzip_output_text.pack()
+
+browse_input_button = tk.Button(unzip_tab, text="Browse...", command=lambda: choose_directory(unzip_input_text))
+browse_input_button.place(x = 30, y = 40)
+
+browse_output_button = tk.Button(unzip_tab, text="Browse...", command=lambda: choose_directory(unzip_output_text))
+browse_output_button.place(x = 30, y = 105)
+
+unzip_button = tk.Button(unzip_tab, text="Unzip", command=unzip_files)
+unzip_button.pack(pady=20)
 
 window.mainloop()
